@@ -137,12 +137,14 @@ if [[ $(whoami) != "root" ]]; then
 	(exit 1)
 fi
 
-apt-get install lib32gcc1
-sudo apt-get install screen
-dpkg --add-architecture i386
-apt-get install lib32stdc++6
-apt-get install libcurl3:i386
-apt-get update
+#apt-get install lib32gcc1
+#sudo apt-get install screen
+#dpkg --add-architecture i386
+#apt-get install lib32stdc++6
+#apt-get install libcurl3:i386
+#apt-get update
+
+sudo yum update
 
 } &> install.log
 
