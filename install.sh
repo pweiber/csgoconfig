@@ -98,7 +98,7 @@ function _spinner() {
 		error_title="${bold}Check Error Log${normal}"
 		printf "%*s\n" $(((${#error_title}+$(tput cols))/2)) "$error_title"
 		eval printf %.0s- '{1..'"${COLUMNS:-$(tput cols)}"\}; echo
-		tail -f install.log
+		#tail -2 install.log
 		printf "\n"
 		exit 1
             fi
@@ -129,7 +129,7 @@ if [[ -f "install.log" ]]; then
 	rm -f install.log
 fi
 
-#sudo touch install.log
+sudo touch install.log
 
 start_spinner "${bold}Performing Pre-Install Tasks${normal}"
 
