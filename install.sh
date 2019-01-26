@@ -129,6 +129,8 @@ if [[ -f "install.log" ]]; then
 	rm -f install.log
 fi
 
+sudo touch install.log
+
 start_spinner "${bold}Performing Pre-Install Tasks${normal}"
 
 {
