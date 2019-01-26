@@ -22,7 +22,7 @@
 #######################################################################################################################
 # All Distro's -- Step 2											      #
 # adduser steam													      #
-# cd /steam												      #
+# cd /home/ec2-user/steam												      #
 # su steam													      #
 # wget https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/install.sh  #
 # bash install.sh												      #
@@ -155,13 +155,13 @@ stop_spinner $?
 start_spinner "${bold}Installing SteamCMD${normal}"
 
 {
-cd /$svc_acct
+cd /home/ec2-user/$svc_acct
 mkdir $steamcmd_folder
 cd $steamcmd_folder
 wget -4 --timeout=5 --tries=3 ${steam_file}
 tar -xvzf steamcmd_linux.tar.gz
 rm -f steamcmd_linux.tar.gz
-./steamcmd.sh +login anonymous +force_install_dir /$svc_acct +quit
+./steamcmd.sh +login anonymous +force_install_dir /home/ec2-user/$svc_acct +quit
 } &>> install.log
 
 stop_spinner $?
@@ -169,7 +169,7 @@ stop_spinner $?
 start_spinner "${bold}Installing Counter-Strike: Global Offensive${normal}"
 
 {
-./steamcmd.sh +login anonymous +force_install_dir /$svc_acct/$game_folder +app_update 740 validate +quit
+./steamcmd.sh +login anonymous +force_install_dir /home/ec2-user/$svc_acct/$game_folder +app_update 740 validate +quit
 } &>> install.log
 
 stop_spinner $?
@@ -177,7 +177,7 @@ stop_spinner $?
 start_spinner "${bold}Installing MetaMod${normal}"
 
 {
-cd /$svc_acct/$game_folder/csgo
+cd /home/ec2-user/$svc_acct/$game_folder/csgo
 wget -4 ${metamod_file}
 tar xfz mmsource*
 rm -f mmsource*
@@ -201,13 +201,13 @@ start_spinner "${bold}Installing Plugins${normal}"
 
 {
 # Download Naid Tails Plugin For Practice Mode @ https://forums.alliedmods.net/showthread.php?t=240668
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/nadetails/NadeTails.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/NadeTails.disabled
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/nadetails/NadeTails.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/NadeTails.disabled
 
 # Download Retakes Plugin As Server Option @ https://forums.alliedmods.net/showthread.php?t=251829
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/plugins/retakes.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/retakes.disabled
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/scripting/retakes.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/retakes.sp
-sed -i '$ d' /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
-cat <<'EOF' >> /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/plugins/retakes.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/retakes.disabled
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/scripting/retakes.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/retakes.sp
+sed -i '$ d' /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
+cat <<'EOF' >> /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
     "retakes"
 	{
         "driver"            "sqlite"
@@ -218,48 +218,48 @@ cat <<'EOF' >> /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.c
     }
 }
 EOF
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes.cfg -O /$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes.cfg
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes_live.cfg -O /$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes_live.cfg
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes_warmup.cfg -O /$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes_warmup.cfg
-mkdir /$svc_acct/$game_folder/csgo/addons/sourcemod/data/sqlite
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/data/sqlite/retakes-sqlite.sq3 -O /$svc_acct/$game_folder/csgo/addons/sourcemod/data/sqlite/retakes-sqlite.sq3
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes.cfg -O /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes.cfg
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes_live.cfg -O /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes_live.cfg
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/cfg/retakes_warmup.cfg -O /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/sourcemod/retakes_warmup.cfg
+mkdir /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/data/sqlite
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/retakes/addons/sourcemod/data/sqlite/retakes-sqlite.sq3 -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/data/sqlite/retakes-sqlite.sq3
 
 # Download Multi 1v1 Plugin https://forums.alliedmods.net/showthread.php?t=241056
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/configs/multi1v1_weapons.cfg -O /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/multi1v1_weapons.cfg
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/multi1v1.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/multi1v1.disabled
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_flashbangs.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_flashbangs.smx
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_kniferounds.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_kniferounds.smx
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/multi1v1.inc -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/multi1v1.inc
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/queue.inc -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/queue.inc
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/updater.inc -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/updater.inc
-mkdir /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/generic.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/generic.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/natives.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/natives.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/radiocommands.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/radiocommands.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/roundtypes.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/roundtypes.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/spawns.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/spawns.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/stats.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/stats.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/version.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/version.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/weaponlogic.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/weaponlogic.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_flashbangs.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_flashbangs.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_kniferounds.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_kniferounds.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_online_stats_viewer.sp -O /$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_online_stats_viewer.sp
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/chi/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/chi/multi1v1.phrases.txt
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/de/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/de/multi1v1.phrases.txt
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/fr/multi1v1.phrases -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/fr/multi1v1.phrases
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/pl/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/pl/multi1v1.phrases.txt
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/pt_p/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/pt_p/multi1v1.phrases.txt
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/sv/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/sv/multi1v1.phrases.txt
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/multi1v1.phrases.txt -O /$svc_acct/$game_folder/csgo/addons/sourcemod/translations/multi1v1.phrases.txt
-mkdir /$svc_acct/$game_folder/csgo/cfg/sourcemod/multi1v1
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/cfg/sourcemod/multi1v1/game_cvars.cfg -O /$svc_acct/$game_folder/csgo/cfg/sourcemod/multi1v1/game_cvars.cfg
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/configs/multi1v1_weapons.cfg -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/configs/multi1v1_weapons.cfg
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/multi1v1.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/multi1v1.disabled
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_flashbangs.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_flashbangs.smx
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_kniferounds.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_kniferounds.smx
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/multi1v1.inc -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/multi1v1.inc
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/queue.inc -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/queue.inc
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/include/updater.inc -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/include/updater.inc
+mkdir /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/generic.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/generic.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/natives.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/natives.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/radiocommands.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/radiocommands.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/roundtypes.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/roundtypes.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/spawns.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/spawns.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/stats.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/stats.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/version.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/version.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1/weaponlogic.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1/weaponlogic.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_flashbangs.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_flashbangs.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_kniferounds.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_kniferounds.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/scripting/multi1v1_online_stats_viewer.sp -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/scripting/multi1v1_online_stats_viewer.sp
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/chi/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/chi/multi1v1.phrases.txt
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/de/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/de/multi1v1.phrases.txt
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/fr/multi1v1.phrases -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/fr/multi1v1.phrases
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/pl/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/pl/multi1v1.phrases.txt
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/pt_p/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/pt_p/multi1v1.phrases.txt
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/sv/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/sv/multi1v1.phrases.txt
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/translations/multi1v1.phrases.txt -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/translations/multi1v1.phrases.txt
+mkdir /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/sourcemod/multi1v1
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/cfg/sourcemod/multi1v1/game_cvars.cfg -O /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/sourcemod/multi1v1/game_cvars.cfg
 ### Disabled online stats viewer plugin due to manual DB creation needed
 ### DB creation instructions @ https://github.com/splewis/csgo-multi-1v1/blob/v1.0.0/README.md
 ### Alter DB connection info and use commands below then create DB
-#wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_online_stats_viewer.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_online_stats_viewer.smx
-#sed -i '$ d' /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
-#cat <<'EOF' >> /$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
+#wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/1v1/addons/sourcemod/plugins/disabled/multi1v1_online_stats_viewer.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/disabled/multi1v1_online_stats_viewer.smx
+#sed -i '$ d' /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
+#cat <<'EOF' >> /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/configs/databases.cfg
 #	"multi1v1"
 #	{
 #		"driver"            "mysql"
@@ -274,7 +274,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-S
 #EOF
 
 # Download Headshot Only Plugin @ https://forums.alliedmods.net/showthread.php?p=2091135
-wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/hsonly/onlyhs-beta.smx -O /$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled
+wget --no-check-certificate https://raw.githubusercontent.com/stokes84/Counter-Strike-Global-Offensive-Server-Installer/master/hsonly/onlyhs-beta.smx -O /home/ec2-user/$svc_acct/$game_folder/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled
 } &>> install.log
 
 stop_spinner $?
@@ -291,7 +291,7 @@ tput rc; tput el; tput civis
 start_spinner "${bold}Creating CSGO Launcher${normal}"
 
 {
-cat <<'EOF' > /$svc_acct/$game_folder/launch.sh
+cat <<'EOF' > /home/ec2-user/$svc_acct/$game_folder/launch.sh
 #!/bin/bash
 servercfg=
 server=
@@ -640,39 +640,39 @@ do
 done
 
 # Reset Default Comp Config
-if [[ -a /steam/csgo/csgo/cfg/gamemode_competitive.cfg ]]; then
-	mv /steam/csgo/csgo/cfg/gamemode_competitive.cfg /steam/csgo/csgo/cfg/gamemode_competitive.bak
+if [[ -a /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.cfg ]]; then
+	mv /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.cfg /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.bak
 fi
 
 # Reset Retakes
-if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx  ]]; then
-	mv /steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx /steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled
+if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx  ]]; then
+	mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled
 fi
 
 # Reset Nade Tails
-if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx ]]; then
-	mv /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled
+if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx ]]; then
+	mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled
 fi
 
 # Reset Multi 1v1 Plugin
-if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx ]]; then
-	mv /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled
+if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx ]]; then
+	mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled
 fi
 
 # Reset Headshot Only Plugin
-if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx ]]; then
-	mv /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled
+if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx ]]; then
+	mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled
 fi
 
 if [[ $server == "standard" ]]; then
 	
 	# Enable Default Comp Mode Config For Standard Servers
-	if [[ -a /steam/csgo/csgo/cfg/gamemode_competitive.bak ]]; then
-		mv /steam/csgo/csgo/cfg/gamemode_competitive.bak /steam/csgo/csgo/cfg/gamemode_competitive.cfg
+	if [[ -a /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.bak ]]; then
+		mv /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.bak /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.cfg
 	fi
 	
 	if [[ $hsonly == "true" ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
 	fi
 	
 	./srcds_run -game csgo -usercon -strictportbind +game_mode ${game_mode} +game_type ${game_type} +mapgroup ${map_group} +map ${map} -tickrate ${tickrate} -maxplayers_override ${maxplayers} -ip ${ip} -port ${port} +servercfgfile ${servercfg}
@@ -682,12 +682,12 @@ fi
 if [[ $server == "practice" ]]; then
 
 	# Enable Nade Tails Plugin
-	if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled /steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx
+	if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled ]]; then
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/NadeTails.smx
 	fi
 	
 	if [[ $hsonly == "true" ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
 	fi
 	
 	./srcds_run -game csgo -usercon -strictportbind +game_mode 1 +game_type 0 +mapgroup ${map_group} +map ${map} -tickrate ${tickrate} -maxplayers_override ${maxplayers} -ip ${ip} -port ${port} +servercfgfile ${servercfg}
@@ -697,16 +697,16 @@ fi
 if [[ $server == "retakes" ]]; then
 
 	# Enable Retakes Plugin
-	if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled  ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled /steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx
+	if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled  ]]; then
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/retakes.smx
 	fi
 	
-	if [[ -a /steam/csgo/csgo/cfg/gamemode_competitive.bak ]]; then
-		mv /steam/csgo/csgo/cfg/gamemode_competitive.bak /steam/csgo/csgo/cfg/gamemode_competitive.cfg
+	if [[ -a /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.bak ]]; then
+		mv /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.bak /home/ec2-user/steam/csgo/csgo/cfg/gamemode_competitive.cfg
 	fi
 	
 	if [[ $hsonly == "true" ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
 	fi
 	
 	./srcds_run -game csgo -usercon -strictportbind +game_mode 1 +game_type 0 +mapgroup ${map_group} +map ${map} -tickrate ${tickrate} -maxplayers_override ${maxplayers} -ip ${ip} -port ${port} +servercfgfile ${servercfg}
@@ -716,12 +716,12 @@ fi
 if [[ $server == "1v1" ]]; then
 
 	# Enable Multi 1v1 Plugin
-	if [[ -a /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled  ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled /steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx
+	if [[ -a /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled  ]]; then
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/multi1v1.smx
 	fi
 	
 	if [[ $hsonly == "true" ]]; then
-		mv /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
+		mv /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.disabled /home/ec2-user/steam/csgo/csgo/addons/sourcemod/plugins/onlyhs-beta.smx
 	fi
 	
 	./srcds_run -game csgo -usercon -strictportbind -tickrate ${tickrate} -maxplayers_override ${maxplayers} -ip ${ip} -port ${port} +servercfgfile ${servercfg} -authkey ${authkey} +host_workshop_collection 279177557 +workshop_start_map 280544066
@@ -729,7 +729,7 @@ if [[ $server == "1v1" ]]; then
 fi
 EOF
 
-cat <<EOF > /$svc_acct/$game_folder/csgo/cfg/practice.cfg
+cat <<EOF > /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/practice.cfg
 
 //GAME: Counter-Strike: Source 
 //TYPE: Practice Server Config 
@@ -811,7 +811,7 @@ writeip
 
 EOF
 
-cat <<EOF > /$svc_acct/$game_folder/csgo/cfg/server.cfg
+cat <<EOF > /home/ec2-user/$svc_acct/$game_folder/csgo/cfg/server.cfg
 
 //GAME: Counter-Strike: Source 
 //TYPE: Regular Server Config 
@@ -860,8 +860,8 @@ start_spinner "${bold}Performing Post-Install Tasks${normal}"
 
 {
 # Change ownership of everything to our service account
-chown -R $svc_acct:$svc_acct /$svc_acct
-chmod +x /$svc_acct/$game_folder/launch.sh
+chown -R $svc_acct:$svc_acct /home/ec2-user/$svc_acct
+chmod +x /home/ec2-user/$svc_acct/$game_folder/launch.sh
 } &> install.log
 
 stop_spinner $?
