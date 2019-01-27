@@ -149,6 +149,8 @@ fi
 sudo yum update -y
 sudo yum -y update glibc.x86_64 libstdc++.x86_64
 sudo yum -y install glibc.i686 libstdc++.i686     
+sudo yum -y install libcurl.i686
+sudo yum -y install libcurl.x86_64
 
 } &> install.log
 
